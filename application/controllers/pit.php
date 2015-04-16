@@ -86,19 +86,20 @@ class Pit extends CI_Controller {
 			}
 		}
 
-		$returndata = array("uri" => "http://geothesaurus/pit/" . $hgid, "hgconcept" => "http://geothesaurus/hgconcept/" . $hgconcept);
+		//$returndata = array("uri" => "http://geothesaurus/pit/" . $hgid, "hgconcept" => "http://geothesaurus/hgconcept/" . $hgconcept);
 
 		$geometryIndex = $data['pit']['properties']['geometryIndex'];
 
 
-		$returndata['geojson']['type'] = "FeatureCollection";
-		$returndata['geojson']['features'][0]['type'] = "Feature";
-		$returndata['geojson']['features'][0]['properties'] = $data['pit']['properties'];
+		$returndata['geojson']['type'] = "Feature";
+		$returndata['geojson']['properties'] = $data['pit']['properties'];
+		$returndata['geojson']['properties']['uri'] = "http://geothesaurus.nl/pit/" . $hgid;
+		$returndata['geojson']['properties']['hgconcept'] = "http://geothesaurus.nl/hgconcept/" . $hgconcept;
 
 		if($geometryIndex<0){
-			$returndata['geojson']['features'][0]['geometry'] = "";
+			$returndata['geojson']['geometry'] = null;
 		}else{
-			$returndata['geojson']['features'][0]['geometry'] = $result['features'][0]['geometry']['geometries'][$geometryIndex];
+			$returndata['geojson']['geometry'] = $result['features'][0]['geometry']['geometries'][$geometryIndex];
 		}
 		
 		//print_r($returndata);
@@ -106,7 +107,7 @@ class Pit extends CI_Controller {
 
 		//print_r($result);
 		header('Content-type: application/json; charset=utf-8');
-		die(json_encode($returndata));
+		die(json_encode($returndata['geojson']));
 
 	}
 
