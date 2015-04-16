@@ -69,7 +69,7 @@ if(isset($pit['properties']['hasEnd'])){
 								</td>
 							</tr>
 						<? } ?>
-					<? }else{ ?>
+					<? }elseif($k!="@id"){ ?>
 						<tr>
 							<th><?= $k ?></th>
 							<td><a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['@id'] ?>"><?= $relation['@id'] ?></a><br />

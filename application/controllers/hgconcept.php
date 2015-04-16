@@ -10,6 +10,7 @@ class Hgconcept extends CI_Controller {
 
 	public function deliver($source,$id,$extId = false){
 
+
 		if(!isset($_SERVER['HTTP_ACCEPT'])){ 							// they don't specify, serve html
 			$this->html($source,$id,$extId);
 		}elseif(preg_match("/rdf\+xml/",$_SERVER['HTTP_ACCEPT'])){ 		// rdf wanted?
@@ -20,7 +21,6 @@ class Hgconcept extends CI_Controller {
 			$this->html($source,$id,$extId);
 		}else{															// any other flavour is ok, as long as it's html
 			$this->html($source,$id,$extId);
-			
 		}
 
 	}
@@ -32,17 +32,23 @@ class Hgconcept extends CI_Controller {
 		if($extId){
 			$data['id'] .= "/" . $extId;
 		}
+		$hgid = $source . '/' . $data['id'];
 
 		$apiurl = "http://api.histograph.io/search?";
 		
-		$searchstring = 'hgid=' . $source . '/' . $data['id'];
+		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );
 		$result = json_decode($json,true);
 
 		$data['pits'] = $result['features'][0]['properties']['pits'];
 		
-		//print_r($data);
-
+		$calculatedConceptID = hgConceptID($data['pits']);
+		if($calculatedConceptID!=$hgid){
+			//echo $calculatedConceptID . " is niet " . $hgid;
+			header("Accept:text/html");
+			header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
+		}
+		
 		$this->load->view('header');
 		$this->load->view('hgconcept', $data);
 		$this->load->view('footer');
@@ -64,6 +70,8 @@ class Hgconcept extends CI_Controller {
 		$searchstring = 'hgid=' . $source . '/' . $data['id'];
 		$json = file_get_contents($apiurl . $searchstring );
 
+		$result = json_decode($json,true);
+		$data['pits'] = $result['features'][0]['properties']['pits'];
 
 		header('Content-type: application/json; charset=utf-8');
 		die($json);
