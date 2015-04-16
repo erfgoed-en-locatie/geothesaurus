@@ -25,7 +25,7 @@ class Pit extends CI_Controller {
 
 	}
 
-	public function html($source,$id,$extId){
+	public function html($source,$id,$extId = false){
 
 		$data['source'] = $source;
 		$data['id'] = $id;
@@ -62,7 +62,7 @@ class Pit extends CI_Controller {
 
 
 
-	public function json($source,$id,$extId){
+	public function json($source,$id,$extId = false){
 
 		$data['source'] = $source;
 		$data['id'] = $id;
@@ -71,13 +71,42 @@ class Pit extends CI_Controller {
 		}
 
 		$apiurl = "http://api.histograph.io/search?";
-		
-		$searchstring = 'hgid=' . $source . '/' . $data['id'];
+		$hgid = $source . '/' . $data['id'];
+		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );
 
+		$result = json_decode($json,true);
 
+		$pits = $result['features'][0]['properties']['pits'];
+		$hgconcept = hgConceptID($pits);
+		
+		foreach ($pits as $pit) {
+			if($pit['hgid']==$source . '/' . $data['id']){
+				$data['pit']['properties'] = $pit;
+			}
+		}
+
+		$returndata = array("uri" => "http://geothesaurus/pit/" . $hgid, "hgconcept" => "http://geothesaurus/hgconcept/" . $hgconcept);
+
+		$geometryIndex = $data['pit']['properties']['geometryIndex'];
+
+
+		$returndata['geojson']['type'] = "FeatureCollection";
+		$returndata['geojson']['features'][0]['type'] = "Feature";
+		$returndata['geojson']['features'][0]['properties'] = $data['pit']['properties'];
+
+		if($geometryIndex<0){
+			$returndata['geojson']['features'][0]['geometry'] = "";
+		}else{
+			$returndata['geojson']['features'][0]['geometry'] = $result['features'][0]['geometry']['geometries'][$geometryIndex];
+		}
+		
+		//print_r($returndata);
+
+
+		//print_r($result);
 		header('Content-type: application/json; charset=utf-8');
-		die($json);
+		die(json_encode($returndata));
 
 	}
 
