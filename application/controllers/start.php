@@ -28,6 +28,8 @@ class Start extends CI_Controller {
 
 		$data['q'] = $q;
 
+		//print_r($data['results']);
+
 		$this->load->view('header');
 		$this->load->view('start', $data);
 		$this->load->view('footer');
