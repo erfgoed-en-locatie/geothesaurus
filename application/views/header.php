@@ -4,7 +4,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Erfgeo</title>
+<title>Geothesaurus</title>
 
 <link href="<?= $this->config->item('base_url') ?>assets/css/bootstrap.min.css" rel="stylesheet" media="all">
 <link href="<?= $this->config->item('base_url') ?>assets/css/style.css" rel="stylesheet" media="all" />
@@ -21,9 +21,11 @@
 <div id="headerbg">
 <div id="header" class="container">
     <div id="usernav">
+    	<? if($this->router->fetch_method() != "index"){ ?>
         <form action="<?= $this->config->item('base_url') ?>">
         <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" /> <button class="btn btn-primary">zoek</button>
 		</form>
+		<? } ?>
     </div>
 
     <h1><a href="<?= $this->config->item('base_url') ?>">GeoThesaurus</a></h1>

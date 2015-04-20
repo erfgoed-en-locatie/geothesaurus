@@ -41,6 +41,8 @@
 $route['default_controller'] = "start";
 $route['404_override'] = '';
 
+$route['hgconcept/frompit/(:any)'] = "hgconcept/frompit/$1";
+
 $route['hgconcept/(?!deliver|html|json|rdf)(:any)'] = "hgconcept/deliver/$1";
 $route['pit/(?!deliver|html|json|rdf)(:any)'] = "pit/deliver/$1";
 $route['bron/(?!deliver|html|json|rdf)(:any)'] = "bron/deliver/$1";

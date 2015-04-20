@@ -25,7 +25,7 @@ class Hgconcept extends CI_Controller {
 
 	}
 
-	public function html($source,$id,$extId){
+	public function html($source,$id,$extId = false){
 
 		$data['source'] = $source;
 		$data['id'] = $id;
@@ -57,7 +57,7 @@ class Hgconcept extends CI_Controller {
 
 
 
-	public function json($source,$id,$extId){
+	public function json($source,$id,$extId = false){
 
 		$data['source'] = $source;
 		$data['id'] = $id;
@@ -76,6 +76,33 @@ class Hgconcept extends CI_Controller {
 		header('Content-type: application/json; charset=utf-8');
 		die($json);
 
+	}
+
+
+
+	public function frompit($source,$id,$extId = false){
+
+		$data['source'] = $source;
+		$data['id'] = $id;
+		if($extId){
+			$data['id'] .= "/" . $extId;
+		}
+		$hgid = $source . '/' . $data['id'];
+
+		$apiurl = "http://api.histograph.io/search?";
+		
+		$searchstring = 'hgid=' . $hgid;
+		$json = file_get_contents($apiurl . $searchstring );
+		$result = json_decode($json,true);
+
+		$data['pits'] = $result['features'][0]['properties']['pits'];
+		
+		$calculatedConceptID = hgConceptID($data['pits']);
+		
+
+		header("Accept:text/html");
+		header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
+	
 	}
 
 
