@@ -7,9 +7,16 @@
 <title>Geothesaurus</title>
 
 <link href="<?= $this->config->item('base_url') ?>assets/css/bootstrap.min.css" rel="stylesheet" media="all">
+
+<script src="<?= $this->config->item('base_url') ?>assets/js/codemirror-5.2/lib/codemirror.js"></script>
+<link rel="stylesheet" href="<?= $this->config->item('base_url') ?>assets/js/codemirror-5.2/lib/codemirror.css">
+<script src="<?= $this->config->item('base_url') ?>assets/js/codemirror-5.2/mode/javascript/javascript.js"></script>
+
+
 <link href="<?= $this->config->item('base_url') ?>assets/css/style.css" rel="stylesheet" media="all" />
 
 <script src="<?= $this->config->item('base_url') ?>assets/js/jquery-1.11.0.min.js"></script>
+
 
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>

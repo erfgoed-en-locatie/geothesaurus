@@ -131,9 +131,14 @@ if(isset($pit['properties']['hasEnd'])){
 
     map.fitBounds(placesLayer);
 
-    var geojsonString = JSON.stringify(geojsonFeature);
+    var geojsonString = JSON.stringify(geojsonFeature, null, 2);
     jQuery('#geojson').html(geojsonString);
 
+
+
+
+    // beautify geojson
+    var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('geojson'));
     
 </script>
 <? } ?>
