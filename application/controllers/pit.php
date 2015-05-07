@@ -33,7 +33,7 @@ class Pit extends CI_Controller {
 			$data['id'] .= "/" . $extId;
 		}
 
-		$apiurl = "http://api.histograph.io/search?";
+		$apiurl = "https://api.histograph.io/search?";
 		
 		$searchstring = 'hgid=' . $source . '/' . $data['id'];
 		$json = file_get_contents($apiurl . $searchstring );
@@ -70,7 +70,7 @@ class Pit extends CI_Controller {
 			$data['id'] .= "/" . $extId;
 		}
 
-		$apiurl = "http://api.histograph.io/search?";
+		$apiurl = "https://api.histograph.io/search?";
 		$hgid = $source . '/' . $data['id'];
 		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );

@@ -34,7 +34,7 @@ class Hgconcept extends CI_Controller {
 		}
 		$hgid = $source . '/' . $data['id'];
 
-		$apiurl = "http://api.histograph.io/search?";
+		$apiurl = "https://api.histograph.io/search?";
 		
 		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );
@@ -65,7 +65,7 @@ class Hgconcept extends CI_Controller {
 			$data['id'] .= "/" . $extId;
 		}
 
-		$apiurl = "http://api.histograph.io/search?";
+		$apiurl = "https://api.histograph.io/search?";
 		
 		$searchstring = 'hgid=' . $source . '/' . $data['id'];
 		$json = file_get_contents($apiurl . $searchstring );
@@ -89,7 +89,7 @@ class Hgconcept extends CI_Controller {
 		}
 		$hgid = $source . '/' . $data['id'];
 
-		$apiurl = "http://api.histograph.io/search?";
+		$apiurl = "https://api.histograph.io/search?";
 		
 		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );
