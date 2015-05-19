@@ -56,24 +56,32 @@ if(isset($pit['properties']['hasEnd'])){
 		<? } ?>
 
 
-		<h3>Relaties</h3>
-		
-		<? if(isset($pit['properties']['relations'])){ ?>
+		<h3>Uitgaande relaties</h3>
+		<? if(isset($relations)){ ?>
 			<table class="table table-striped">
-				<? foreach ($pit['properties']['relations'] as $k => $v) { ?>
-					<? if(is_array($v)){ ?>
-						<? foreach ($v as $relation) { ?>
-							<tr>
-								<th><?= $k ?></th>
-								<td><a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['@id'] ?>"><?= $relation['@id'] ?></a><br />
-								</td>
-							</tr>
-						<? } ?>
-					<? }elseif($k!="@id"){ ?>
+				<? foreach ($relations as $relation) { ?>
+					<? if($relation['from']==$pit['properties']['hgid']){ ?>
 						<tr>
-							<th><?= $k ?></th>
-							<td><a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['@id'] ?>"><?= $relation['@id'] ?></a><br />
+							<th><?= $relation['relation'] ?></th>
+							<td>
+							<a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['to'] ?>"><?= $relation['to'] ?></a>
 							</td>
+						</tr>
+					<? } ?>
+				<? } ?>
+			</table>
+		<? } ?>
+
+		<h3>Inkomende relaties</h3>
+		<? if(isset($relations)){ ?>
+			<table class="table table-striped">
+				<? foreach ($relations as $relation) { ?>
+					<? if($relation['to']==$pit['properties']['hgid']){ ?>
+						<tr>
+							<td>
+							<a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['from'] ?>"><?= $relation['from'] ?></a>
+							</td>
+							<th><?= $relation['relation'] ?></th>
 						</tr>
 					<? } ?>
 				<? } ?>

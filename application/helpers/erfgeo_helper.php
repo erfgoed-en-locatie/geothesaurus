@@ -36,7 +36,25 @@ if(!function_exists('preferredName')){
 		}
 
 		// no preferred names found?
-		return $pits[0]['hgid'];
+		return $pits[0]['name'];
+	
+	}
+
+}
+
+
+if(!function_exists('hrefUrl')){
+	
+	function hrefUrl($text){
+		
+		$sources = array("tgn","geonames","gemeentegeschiedenis","nationaal-wegenbestand","dbpedia");
+
+		$pattern = "/(https?:\/\/[^ ]+)/";
+		$replacement = '<a href="$1" target="_blank">$1</a>';
+
+		$text = preg_replace($pattern, $replacement, $text);
+		
+		return $text;
 	
 	}
 

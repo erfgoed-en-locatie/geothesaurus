@@ -35,28 +35,63 @@ class Pit extends CI_Controller {
 
 		$apiurl = "https://api.histograph.io/search?";
 		
-		$searchstring = 'hgid=' . $source . '/' . $data['id'];
+		$pitid = $source . '/' . $data['id'];
+		$searchstring = 'hgid=' . $pitid;
 		$json = file_get_contents($apiurl . $searchstring );
 		$result = json_decode($json,true);
 
-		$pits = $result['features'][0]['properties']['pits'];
-
-		foreach ($pits as $pit) {
-			if($pit['hgid']==$source . '/' . $data['id']){
-				$data['pit']['properties'] = $pit;
-			}
-		}
-
-		$gindex = $data['pit']['properties']['geometryIndex'];
-		if($gindex>-1){
-			$data['pit']['geometry'] = $result['features'][0]['geometry']['geometries'][$gindex];
-		}
 		
-		$data['hgconcept'] = hgConceptID($pits);
+		if(isset($result['features'][0]['properties']['pits'])){
+			
+			$pits = $result['features'][0]['properties']['pits'];
+			$data['relations'] = array();
 
-		$this->load->view('header');
-		$this->load->view('pit', $data);
-		$this->load->view('footer');
+			foreach ($pits as $pit) {
+				if($pit['hgid']==$source . '/' . $data['id']){
+					$data['pit']['properties'] = $pit;
+				}
+
+				if(isset($pit['relations'])){
+
+					foreach ($pit['relations'] as $rType => $relation) {
+						if(is_array($relation)){
+							foreach ($relation as $k => $toHgId) {
+								if($pit['hgid']==$pitid || $toHgId['@id']==$pitid){ // only incoming or outgoing relations of current pit
+									$data['relations'][] = array("from" => $pit['hgid'],
+														"to" => $toHgId['@id'],
+														"relation" => $rType);
+								}
+							}
+						}
+						
+					}
+
+				}
+			}
+
+			$gindex = $data['pit']['properties']['geometryIndex'];
+			if($gindex>-1){
+				$data['pit']['geometry'] = $result['features'][0]['geometry']['geometries'][$gindex];
+			}
+			
+			$data['hgconcept'] = hgConceptID($pits);
+
+			$this->load->view('header');
+			$this->load->view('pit', $data);
+			$this->load->view('footer');
+
+			
+		}else{
+			$data['message']['title'] = "Niet gevonden!";
+			$data['message']['text'] = 'De api heeft geen pits gevonden op <a href="' . $apiurl . $searchstring . '">' . $apiurl . $searchstring . '</a>';
+
+
+			$this->load->view('header');
+			$this->load->view('notfound', $data);
+			$this->load->view('footer');
+		}
+
+		
 
 	}
 

@@ -29,7 +29,32 @@ class Bron extends CI_Controller {
 
 		
 		
-		$data['source'] = $source;
+		$apiurl = "https://api.histograph.io/";
+		
+		$searchstring = 'sources/' . $source;
+
+
+		$json = file_get_contents($apiurl . $searchstring );
+		$result = json_decode($json,true);
+
+		$fields = array("title", 
+						"description", 
+						"edits", 
+						"editor", 
+						"license", 
+						"author", 
+						"website", 
+						"sourceCreationDate"
+						);
+		foreach($fields as $field){
+			
+			if(isset($result[$field])){
+				$data['source'][$field] = $result[$field];
+			}else{
+				$data['source'][$field] = "";
+			}
+			
+		}
 
 		$this->load->view('header');
 		$this->load->view('bron', $data);
