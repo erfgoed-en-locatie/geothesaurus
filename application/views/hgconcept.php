@@ -25,6 +25,10 @@
 		if(isset($pit['hasBeginning'])){
 			$datering = date("Y",strtotime($pit['hasBeginning']));
 		}
+		if(isset($pit['hasEnd'])){
+			$datering .= ' - ' . date("Y",strtotime($pit['hasEnd']));
+		}
+
 
 		 ?>
 		<tr class="pit">
