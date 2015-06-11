@@ -28,7 +28,7 @@
 <div id="headerbg">
 	<div id="header" class="container">
 		<div id="mainmenu">
-			Thesaurus <span class="delimiter"></span>
+			<a href="http://erfgeo.nl/thesaurus/">Thesaurus</a> <span class="delimiter"></span>
 			<a href="http://erfgeo.nl/nieuws/">Nieuws</a><span class="delimiter"></span>
 			<a href="http://erfgeo.nl/wat-hoe/">Wat? Hoe?</a><span class="delimiter"></span>
 			<a href="http://erfgeo.nl/tools/">Tools</a>
