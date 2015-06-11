@@ -45,9 +45,17 @@
 
 		<div id="search">
 			<? if($this->router->fetch_method() != "index"){ ?>
-		    <form action="<?= $this->config->item('base_url') ?>">
-		    <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" /> <button class="btn btn-primary">zoek</button>
+		    <form action="<?= $this->config->item('base_url') ?>" onsubmit="toViewer(); return false;">
+		    <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" id="q" /> <button class="btn btn-primary">zoek</button>
 			</form>
+
+			<script type="text/javascript">
+
+				function toViewer(){
+					window.location.href = 'http://erfgeo.nl/thesaurus/#search=' + $('#q').val();
+				}
+
+			</script>
 			<? } ?>
 		</div>
  	
