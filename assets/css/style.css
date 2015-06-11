@@ -78,3 +78,10 @@ p{
 
 	background-color: #efefef;
 }
+
+table.sortable th.asc:before{
+	content: '\25b4';
+}
+table.sortable th.desc:before{
+	content: '\25be';
+}
