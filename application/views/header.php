@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
+<script src="<?= $this->config->item('base_url') ?>assets/js/sorttables.js"></script>
 </head>
 
 <body>
