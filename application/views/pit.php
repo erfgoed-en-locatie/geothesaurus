@@ -112,7 +112,7 @@ if(isset($pit['properties']['hasEnd'])){
 	var southWest = L.latLng(51.175, 3.001), northEast = L.latLng(53.549, 7.483), bounds = L.latLngBounds(southWest, northEast);
     var map = L.map('map').fitBounds(bounds);
 
-	L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 14
     }).addTo(map);
