@@ -26,22 +26,28 @@
 <body>
 
 <div id="headerbg">
-<div id="header" class="container">
-    <div id="usernav">
-    	<? if($this->router->fetch_method() != "index"){ ?>
-        <form action="<?= $this->config->item('base_url') ?>">
-        <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" /> <button class="btn btn-primary">zoek</button>
-		</form>
-		<? } ?>
-    </div>
+	<div id="header" class="container">
+		<div id="mainmenu">
+			Thesaurus <span class="delimiter"></span>
+			<a href="http://erfgeo.nl/nieuws/">Nieuws</a><span class="delimiter"></span>
+			<a href="http://erfgeo.nl/wat-hoe/">Wat? Hoe?</a><span class="delimiter"></span>
+			<a href="http://erfgeo.nl/tools/">Tools</a>
+		</div>
+	    <h1><a href="http://erfgeo.nl/"><span>Erf</span>Geo</a></h1>
+	</div>
+</div>
 
-    <h1><a href="<?= $this->config->item('base_url') ?>">GeoThesaurus</a></h1>
-    
-</div>
-</div>
 
 
 
 <div id="wrap">
     <div id="main" class="container">
+
+		<div id="search">
+			<? if($this->router->fetch_method() != "index"){ ?>
+		    <form action="<?= $this->config->item('base_url') ?>">
+		    <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" /> <button class="btn btn-primary">zoek</button>
+			</form>
+			<? } ?>
+		</div>
  	

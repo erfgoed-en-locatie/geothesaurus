@@ -7,7 +7,7 @@ if(isset($pit['properties']['uri'])){
 	$props['bron uri'] = '<a href="' . $pit['properties']['uri'] . '">' . $pit['properties']['uri'] . '</a>';
 }
 $props["type"] = $pit['properties']['type'];
-$props["permalink"] = $this->config->item('base_url') . 'pit/' . $pit['properties']['hgid'];
+$props["permalink"] = '<input class="form-control" type="text" value="' . $this->config->item('base_url') . 'pit/' . $pit['properties']['hgid'] . '" />';
 if(isset($pit['properties']['hasBeginning'])){
 	$props['startdatum'] = $pit['properties']['hasBeginning'];
 }
