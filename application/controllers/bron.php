@@ -29,7 +29,7 @@ class Bron extends CI_Controller {
 
 		
 		
-		$apiurl = "https://api.histograph.io/";
+		$apiurl = "https://api.erfgeo.nl/";
 		
 		$searchstring = 'sources/' . $source;
 

@@ -34,7 +34,7 @@ class Hgconcept extends CI_Controller {
 		}
 		$hgid = $source . '/' . $data['id'];
 
-		$apiurl = "https://api.histograph.io/search?";
+		$apiurl = "https://api.erfgeo.nl/search?";
 		
 		$searchstring = 'hgid=' . $hgid;
 		$json = file_get_contents($apiurl . $searchstring );
