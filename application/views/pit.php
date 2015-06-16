@@ -49,7 +49,13 @@ if(isset($pit['properties']['hasEnd'])){
 				<? foreach ($pit['properties']['data'] as $k => $v) { ?>
 					<tr>
 						<th><?= $k ?></th>
-						<td><?= $v ?></td>
+						<td>
+							<? if(is_array($v)) { ?>
+								<?=  implode(', ', $v) ?>
+							<? } else { ?>
+								<?= $v ?>
+							<? } ?>
+						</td>
 					</tr>
 				<? } ?>
 			</table>
