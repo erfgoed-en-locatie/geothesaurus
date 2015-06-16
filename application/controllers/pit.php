@@ -33,7 +33,7 @@ class Pit extends CI_Controller {
 			$data['id'] .= "/" . $extId;
 		}
 
-		$apiurl = "https://api.histograph.io/search?";
+		$apiurl = "https://api.erfgeo.nl/search?";
 		
 		$pitid = $source . '/' . $data['id'];
 		$searchstring = 'hgid=' . $pitid;
