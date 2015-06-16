@@ -10,7 +10,7 @@ class Start extends CI_Controller {
 
 	public function index(){
 
-		$apiurl = "https://api.histograph.io/search?";
+		$apiurl = "https://api.erfgeo.nl/search?";
 		$data['count'] = 0;
 		$data['results'] = array();
 		$q = "";
