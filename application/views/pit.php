@@ -120,7 +120,7 @@ if(isset($pit['properties']['hasEnd'])){
 
 	L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 14
+        maxZoom: 19
     }).addTo(map);
 
     var mapIcon = L.icon({
