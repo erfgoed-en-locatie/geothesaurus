@@ -37,8 +37,8 @@
 			<tr class="pit">
 				<td><?= $pit['name'] ?></td>
 				<td><?= $datering ?></td>
-				<td><a href="<?= $this->config->item('base_url') ?>pit/<?= $pit['hgid'] ?>"><?= $pit['hgid'] ?></a></td>
-				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['source'] ?>"><?= $pit['source'] ?></a></td>
+				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
+				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>
 		<? } ?>
 	<? } ?>
@@ -74,8 +74,8 @@
 			<tr class="pit">
 				<td><?= $pit['name'] ?></td>
 				<td><?= $datering ?></td>
-				<td><a href="<?= $this->config->item('base_url') ?>pit/<?= $pit['hgid'] ?>"><?= $pit['hgid'] ?></a></td>
-				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['source'] ?>"><?= $pit['source'] ?></a></td>
+				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
+				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>
 		<? } ?>
 	<? } ?>

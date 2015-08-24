@@ -1,26 +1,33 @@
 <?
 
 // format kenmerken
-$props["naam"] = $pit['properties']['name'];
-$props["bron"] = '<a href="' . $this->config->item('base_url') . 'bron/' . $pit['properties']['source'] . '">' . $pit['properties']['source'] . '</a>';
-if(isset($pit['properties']['uri'])){
-	$props['bron uri'] = '<a href="' . $pit['properties']['uri'] . '">' . $pit['properties']['uri'] . '</a>';
+$props["naam"] = $pit['name'];
+$props["bron"] = '<a href="' . $this->config->item('base_url') . 'bron/' . $pit['dataset'] . '">' . $pit['dataset'] . '</a>';
+if(isset($pit['uri'])){
+	$props['bron uri'] = '<a href="' . $pit['uri'] . '">' . $pit['uri'] . '</a>';
+	$pitid = $pit['uri'];
+}else{
+	$pitid = $pit['id'];
 }
-$props["type"] = $pit['properties']['type'];
-$props["permalink"] = '<input class="form-control" type="text" value="' . $this->config->item('base_url') . 'pit/' . $pit['properties']['hgid'] . '" />';
-if(isset($pit['properties']['hasBeginning'])){
-	$props['startdatum'] = $pit['properties']['hasBeginning'];
+$props["type"] = $pit['type'];
+$props["permalink"] = '<input class="form-control" type="text" value="' . $this->config->item('base_url') . 'pit/?id=' . $pitid . '" />';
+if(isset($pit['validSince'])){
+	if(is_array($pit['validSince'])){
+		$pit['validSince'] = implode(" - ", $pit['validSince']);
+	}
+	$props['startdatum'] = $pit['validSince'];
 }
-if(isset($pit['properties']['hasEnd'])){
-	$props['einddatum'] = $pit['properties']['hasEnd'];
+if(isset($pit['validUntil'])){
+	if(is_array($pit['validUntil'])){
+		$pit['validUntil'] = implode(" - ", $pit['validUntil']);
+	}
+	$props['einddatum'] = $pit['validUntil'];
 }
-
-// format relaties
 
 ?>
 
 
-<h1><?= $pit['properties']['name'] ?></h1>
+<h1><?= $pit['name'] ?></h1>
 
 
 
@@ -29,7 +36,7 @@ if(isset($pit['properties']['hasEnd'])){
 
 		<h3>Onderdeel van hgconcept</h3>
 
-		<p><a href="<?= $this->config->item('base_url') ?>hgconcept/<?= $hgconcept ?>"><?= $this->config->item('base_url') ?>hgconcept/<?= $hgconcept ?></a></p>
+		<p><a href="<?= $this->config->item('base_url') ?>hgconcept/?id=<?= $hgconcept ?>"><?= $this->config->item('base_url') ?>hgconcept/?id=<?= $hgconcept ?></a></p>
 
 		<h3>Kenmerken</h3>
 
@@ -44,9 +51,9 @@ if(isset($pit['properties']['hasEnd'])){
 
 
 		<h3>Additionele data uit bron</h3>
-		<? if(isset($pit['properties']['data'])){ ?>
+		<? if(isset($pit['data'])){ ?>
 			<table class="table table-striped">
-				<? foreach ($pit['properties']['data'] as $k => $v) { ?>
+				<? foreach ($pit['data'] as $k => $v) { ?>
 					<tr>
 						<th><?= $k ?></th>
 						<td>
@@ -63,36 +70,20 @@ if(isset($pit['properties']['hasEnd'])){
 
 
 		<h3>Uitgaande relaties</h3>
-		<? if(isset($relations)){ ?>
+		<? if(isset($hairs)){ ?>
 			<table class="table table-striped">
-				<? foreach ($relations as $relation) { ?>
-					<? if($relation['from']==$pit['properties']['hgid']){ ?>
-						<tr>
-							<th><?= $relation['relation'] ?></th>
-							<td>
-							<a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['to'] ?>"><?= $relation['to'] ?></a>
-							</td>
-						</tr>
-					<? } ?>
+				<? foreach ($hairs as $hair) { ?>
+					<tr>
+						<th><?= $hair['relation'] ?></th>
+						<td>
+						<a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $hair['@id'] ?>"><?= $hair['name'] ?></a>
+						</td>
+					</tr>
 				<? } ?>
 			</table>
 		<? } ?>
 
-		<h3>Inkomende relaties</h3>
-		<? if(isset($relations)){ ?>
-			<table class="table table-striped">
-				<? foreach ($relations as $relation) { ?>
-					<? if($relation['to']==$pit['properties']['hgid']){ ?>
-						<tr>
-							<td>
-							<a href="<?= $this->config->item('base_url') ?>pit/<?= $relation['from'] ?>"><?= $relation['from'] ?></a>
-							</td>
-							<th><?= $relation['relation'] ?></th>
-						</tr>
-					<? } ?>
-				<? } ?>
-			</table>
-		<? } ?>
+		
 
 
 
@@ -135,7 +126,7 @@ if(isset($pit['properties']['hasEnd'])){
     var geojsonFeature = {
         "type": "Feature",
         "properties": {
-            "name": "<?= $pit['properties']['name'] ?>"
+            "name": "<?= $pit['name'] ?>"
         },
         "geometry": <?= json_encode($pit['geometry']) ?>
     };

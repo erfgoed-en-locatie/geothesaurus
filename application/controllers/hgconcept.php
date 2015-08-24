@@ -8,45 +8,48 @@ class Hgconcept extends CI_Controller {
 	}
 
 
-	public function deliver($source,$id,$extId = false){
+	public function index(){
 
+		$id = $_REQUEST['id'];
 
 		if(!isset($_SERVER['HTTP_ACCEPT'])){ 							// they don't specify, serve html
-			$this->html($source,$id,$extId);
+			$this->html();
 		}elseif(preg_match("/rdf\+xml/",$_SERVER['HTTP_ACCEPT'])){ 		// rdf wanted?
-			$this->rdfxml($source,$id,$extId);
+			$this->rdfxml();
 		}elseif(preg_match("/json/",$_SERVER['HTTP_ACCEPT'])){ 			// json wanted?
-			$this->json($source,$id,$extId);
+			$this->json();
 		}elseif(preg_match("/text\/html/",$_SERVER['HTTP_ACCEPT'])){ 	// html wanted?
-			$this->html($source,$id,$extId);
+			$this->html();
 		}else{															// any other flavour is ok, as long as it's html
-			$this->html($source,$id,$extId);
+			$this->html();
 		}
 
 	}
 
-	public function html($source,$id,$extId = false){
+	public function html(){
 
-		$data['source'] = $source;
-		$data['id'] = $id;
-		if($extId){
-			$data['id'] .= "/" . $extId;
-		}
-		$hgid = $source . '/' . $data['id'];
+		$id = $_REQUEST['id'];
 
-		$apiurl = "https://api.erfgeo.nl/search?";
 		
-		$searchstring = 'hgid=' . $hgid;
-		$json = file_get_contents($apiurl . $searchstring );
+		
+		$searchstring = 'search?id=' . $id;
+		$json = file_get_contents($this->config->item('api_url') . $searchstring );
 		$result = json_decode($json,true);
+		
+		$data['pits'] = array();
 
-		$data['pits'] = $result['features'][0]['properties']['pits'];
+		foreach($result['features'][0]['properties']['pits'] as $pit){
+			if(!isset($pit['id']) && isset($pit['uri'])){
+				$pit['id'] = $pit['uri'];
+			}
+			$data['pits'][] = $pit;
+		}
 		
 		$calculatedConceptID = hgConceptID($data['pits']);
-		if($calculatedConceptID!=$hgid){
-			//echo $calculatedConceptID . " is niet " . $hgid;
-			header("Accept:text/html");
-			header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
+		if($calculatedConceptID!=$id){
+			echo $calculatedConceptID . " is niet " . $id;
+			//header("Accept:text/html");
+			//header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
 		}
 		
 		$this->load->view('header');
@@ -57,7 +60,7 @@ class Hgconcept extends CI_Controller {
 
 
 
-	public function json($source,$id,$extId = false){
+	public function json($id){
 
 		$data['source'] = $source;
 		$data['id'] = $id;
@@ -80,7 +83,7 @@ class Hgconcept extends CI_Controller {
 
 
 
-	public function frompit($source,$id,$extId = false){
+	public function frompit($id){
 
 		$data['source'] = $source;
 		$data['id'] = $id;

@@ -45,7 +45,7 @@
     <div id="main" class="container">
 
 		<div id="search">
-			<? if($this->router->fetch_method() != "index"){ ?>
+			<? if($this->router->fetch_method() != "index" || $this->router->fetch_class() != "start"){ ?>
 		    <form action="<?= $this->config->item('base_url') ?>" onsubmit="toViewer(); return false;">
 		    <input style="width:200px;" value="" type="text" class="floatinput form-control" name="q" id="q" /> <button class="btn btn-primary">zoek</button>
 			</form>

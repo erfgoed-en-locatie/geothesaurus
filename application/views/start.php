@@ -36,7 +36,7 @@ if($count==1){
 
 	?>
 	<div class="result">
-		<h3><a href="<?= $this->config->item('base_url') ?>hgconcept/<?= hgConceptID($result['properties']['pits']) ?>"><?= preferredName($result['properties']['pits']) ?></a><span class="light">, <?= $result['properties']['type'] ?></span></h3>
+		<h3><a href="<?= $this->config->item('base_url') ?>hgconcept/?id=<?= hgConceptID($result['properties']['pits']) ?>"><?= preferredName($result['properties']['pits']) ?><?= getBroader($result['properties']['pits']) ?></a><span class="light">, <?= $result['properties']['type'] ?></span></h3>
 	</div>
 <? } ?>
 

@@ -8,73 +8,53 @@ class Pit extends CI_Controller {
 	}
 
 
-	public function deliver($source,$id,$extId = false){
-
+	public function index(){
+		
 		if(!isset($_SERVER['HTTP_ACCEPT'])){ 							// they don't specify, serve html
-			$this->html($source,$id,$extId);
+			$this->html();
 		}elseif(preg_match("/rdf\+xml/",$_SERVER['HTTP_ACCEPT'])){ 		// rdf wanted?
-			$this->rdfxml($source,$id,$extId);
+			$this->rdfxml();
 		}elseif(preg_match("/json/",$_SERVER['HTTP_ACCEPT'])){ 			// json wanted?
-			$this->json($source,$id,$extId);
+			$this->json();
 		}elseif(preg_match("/text\/html/",$_SERVER['HTTP_ACCEPT'])){ 	// html wanted?
-			$this->html($source,$id,$extId);
+			$this->html();
 		}else{															// any other flavour is ok, as long as it's html
-			$this->html($source,$id,$extId);
+			$this->html();
 			
 		}
 
 	}
 
-	public function html($source,$id,$extId = false){
+	public function html(){
 
-		$data['source'] = $source;
-		$data['id'] = $id;
-		if($extId){
-			$data['id'] .= "/" . $extId;
-		}
+		$pitid = $_REQUEST['id'];
 
-		$apiurl = "https://api.erfgeo.nl/search?";
-		
-		$pitid = $source . '/' . $data['id'];
-		$searchstring = 'hgid=' . $pitid;
-		$json = file_get_contents($apiurl . $searchstring );
+		$searchstring = 'search?id=' . $pitid;
+		$json = file_get_contents($this->config->item('api_url') . $searchstring );
 		$result = json_decode($json,true);
 
-		
 		if(isset($result['features'][0]['properties']['pits'])){
 			
 			$pits = $result['features'][0]['properties']['pits'];
 			$data['relations'] = array();
 
 			foreach ($pits as $pit) {
-				if($pit['hgid']==$source . '/' . $data['id']){
-					$data['pit']['properties'] = $pit;
-				}
-
-				if(isset($pit['relations'])){
-
-					foreach ($pit['relations'] as $rType => $relation) {
-						if(is_array($relation)){
-							foreach ($relation as $k => $toHgId) {
-								if($pit['hgid']==$pitid || $toHgId['@id']==$pitid){ // only incoming or outgoing relations of current pit
-									$data['relations'][] = array("from" => $pit['hgid'],
-														"to" => $toHgId['@id'],
-														"relation" => $rType);
-								}
-							}
-						}
-						
-					}
-
+				if(isset($pit['uri']) && $pit['uri']==$pitid){
+					$data['pit'] = $pit;
+				}elseif(isset($pit['id']) && $pit['id']==$pitid){
+					$data['pit'] = $pit;
 				}
 			}
 
-			$gindex = $data['pit']['properties']['geometryIndex'];
+			$gindex = $data['pit']['geometryIndex'];
 			if($gindex>-1){
 				$data['pit']['geometry'] = $result['features'][0]['geometry']['geometries'][$gindex];
 			}
 			
 			$data['hgconcept'] = hgConceptID($pits);
+			$data['hairs'] = getHairs($data['pit']);
+
+
 
 			$this->load->view('header');
 			$this->load->view('pit', $data);

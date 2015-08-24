@@ -10,7 +10,6 @@ class Start extends CI_Controller {
 
 	public function index(){
 
-		$apiurl = "https://api.erfgeo.nl/search?";
 		$data['count'] = 0;
 		$data['results'] = array();
 		$q = "";
@@ -18,8 +17,8 @@ class Start extends CI_Controller {
 		if(isset($_GET['q'])){ 
 
 			$q = $_GET['q'];
-			$searchstring = 'name=' . urlencode('"' . $q . '"');
-			$json = file_get_contents($apiurl . $searchstring );
+			$searchstring = 'search?name=' . urlencode('"' . $q . '"');
+			$json = file_get_contents($this->config->item('api_url') . $searchstring );
 			$result = json_decode($json,true);
 
 			$data['count'] = count($result['features']);
