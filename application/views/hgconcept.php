@@ -14,8 +14,9 @@
 <table class="table table-striped sortable">
 	<thead>
 		<tr>
-			<th style="width:25%;">naam</th>
-			<th style="width:20%;">datering</th>
+			<th style="width:20%;">naam</th>
+			<th style="width:12%;">begin</th>
+			<th style="width:12%;">eind</th>
 			<th>PiT</th>
 			<th style="width:20%;">bron</th>
 		</tr>
@@ -24,19 +25,27 @@
 	<? foreach ($pits as $pit) { ?>
 		<? if($pit['geometryIndex']>-1){
 
-			$datering = "";
-			if(isset($pit['hasBeginning'])){
-				$datering = date("Y",strtotime($pit['hasBeginning']));
+			$validSince = "";
+			if(isset($pit['validSince'])){
+				if(is_array($pit['validSince'])){
+					$pit['validSince'] = implode(", ", $pit['validSince']);
+				}
+				$validSince = $pit['validSince'];
 			}
-			if(isset($pit['hasEnd'])){
-				$datering .= ' - ' . date("Y",strtotime($pit['hasEnd']));
+			$validUntil = "";
+			if(isset($pit['validUntil'])){
+				if(is_array($pit['validUntil'])){
+					$pit['validUntil'] = implode(", ", $pit['validUntil']);
+				}
+				$validUntil = $pit['validUntil'];
 			}
 
 
 			 ?>
 			<tr class="pit">
 				<td><?= $pit['name'] ?></td>
-				<td><?= $datering ?></td>
+				<td><?= $validSince ?></td>
+				<td><?= $validUntil ?></td>
 				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
 				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>
@@ -52,28 +61,38 @@
 <table class="table table-striped sortable">
 	<thead>
 		<tr>
-			<th style="width:25%;">naam</th>
-			<th style="width:20%;">datering</th>
-		<th>PiT</th>
-		<th style="width:20%;">bron</th>
+			<th style="width:20%;">naam</th>
+			<th style="width:12%;">begin</th>
+			<th style="width:12%;">eind</th>
+			<th>PiT</th>
+			<th style="width:20%;">bron</th>
 		</tr>
 	</thead>
 	<tbody>
 	<? foreach ($pits as $pit) { ?>
 		<? if($pit['geometryIndex']<0){
 
-			$datering = "";
-			if(isset($pit['hasBeginning'])){
-				$datering = date("Y",strtotime($pit['hasBeginning']));
+			$validSince = "";
+			if(isset($pit['validSince'])){
+				if(is_array($pit['validSince'])){
+					$pit['validSince'] = implode(", ", $pit['validSince']);
+				}
+				$validSince = $pit['validSince'];
 			}
-			if(isset($pit['hasEnd'])){
-				$datering .= ' - ' . date("Y",strtotime($pit['hasEnd']));
+			$validUntil = "";
+			if(isset($pit['validUntil'])){
+				if(is_array($pit['validUntil'])){
+					$pit['validUntil'] = implode(", ", $pit['validUntil']);
+				}
+				$validUntil = $pit['validUntil'];
 			}
+
 
 			 ?>
 			<tr class="pit">
 				<td><?= $pit['name'] ?></td>
-				<td><?= $datering ?></td>
+				<td><?= $validSince ?></td>
+				<td><?= $validUntil ?></td>
 				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
 				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>

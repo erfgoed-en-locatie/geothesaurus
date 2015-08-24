@@ -62,9 +62,11 @@ class Pit extends CI_Controller {
 
 			
 		}else{
-			$data['message']['title'] = "Niet gevonden!";
-			$data['message']['text'] = 'De api heeft geen pits gevonden op <a href="' . $apiurl . $searchstring . '">' . $apiurl . $searchstring . '</a>';
 
+			$data['message']['title'] = "Geen PiT gevonden!";
+			$data['message']['text'] = 'De api heeft geen pits gevonden op <a href="' . $this->config->item('api_url') . $searchstring . '">' . $this->config->item('api_url') . $searchstring . '</a>';
+			$data['message']['text'] .= '<br /><br />Wellicht betreft het een verwijzing naar de externe uri <a href="' . $pitid . '">' . $pitid . '</a>';
+	
 
 			$this->load->view('header');
 			$this->load->view('notfound', $data);

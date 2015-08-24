@@ -137,6 +137,11 @@ if(!function_exists('getHairs')){
 					}
 					
 				}
+
+				// if a relation exist to external uri we don't have a name
+				if(!isset($hairs[$i]['name'])){
+					$hairs[$i]['name'] = $hairs[$i]['@id'];
+				}
 			}
 			
 			return $hairs;
