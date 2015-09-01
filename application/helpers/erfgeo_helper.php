@@ -32,9 +32,12 @@ if(!function_exists('preferredName')){
 		// first, get most used name
 		$frequency = array();
 		foreach ($pits as $key => $pit) {
-			if(isset($frequency[$pit['name']])){
+			if(!isset($pit['name'])){
+				$pit['name'] = "";
+			}
+			if(isset($frequency[$pit['name']]) && $pit['name']!=""){
 				$frequency[$pit['name']]++;
-			}else{
+			}elseif($pit['name']!=""){
 				$frequency[$pit['name']]=1;
 			}
 		}

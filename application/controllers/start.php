@@ -23,6 +23,7 @@ class Start extends CI_Controller {
 
 			$data['count'] = count($result['features']);
 			$data['results'] = $result['features'];
+
 		}
 
 		$data['q'] = $q;

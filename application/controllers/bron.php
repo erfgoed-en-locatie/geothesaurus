@@ -29,12 +29,9 @@ class Bron extends CI_Controller {
 
 		
 		
-		$apiurl = "https://api.erfgeo.nl/";
-		
-		$searchstring = 'sources/' . $source;
+		$searchstring = 'datasets/' . $source;
+		$json = file_get_contents($this->config->item('api_url') . $searchstring );
 
-
-		$json = file_get_contents($apiurl . $searchstring );
 		$result = json_decode($json,true);
 
 		$fields = array("title", 
