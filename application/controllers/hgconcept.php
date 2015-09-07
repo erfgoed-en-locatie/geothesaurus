@@ -45,6 +45,9 @@ class Hgconcept extends CI_Controller {
 			if(!isset($pit['name'])){
 				$pit['name'] = "";
 			}
+			if(!isset($pit['dataset'])){
+				$pit['dataset'] = "";
+			}
 			$data['pits'][] = $pit;
 		}
 		

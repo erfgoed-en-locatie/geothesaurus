@@ -8,7 +8,7 @@ if(!function_exists('hgConceptID')){
 
 		foreach ($sources as $source) {
 			foreach ($pits as $pit) {
-				if($pit['dataset']==$source){
+				if(isset($pit['dataset']) && $pit['dataset']==$source){
 					if(isset($pit['uri'])){
 						return $pit['uri'];
 					}else{
@@ -51,7 +51,7 @@ if(!function_exists('preferredName')){
 
 		foreach ($sources as $source) {
 			foreach ($pits as $pit) {
-				if($pit['dataset']==$source){
+				if(isset($pit['dataset']) && $pit['dataset']==$source){
 					if($usage[0][1] > $frequency[$pit['name']]){ 
 						return $usage[0][0];						// most used name
 					}else{

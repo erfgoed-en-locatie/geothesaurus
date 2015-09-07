@@ -46,7 +46,13 @@
 				<td><?= $pit['name'] ?></td>
 				<td><?= $validSince ?></td>
 				<td><?= $validUntil ?></td>
-				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
+				<td>
+					<? if($pit['dataset'] != ""){ ?>
+						<a href="!!<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
+					<? }else{ ?>
+						<?= $pit['id'] ?>
+					<? } ?>
+				</td>
 				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>
 		<? } ?>
@@ -93,7 +99,13 @@
 				<td><?= $pit['name'] ?></td>
 				<td><?= $validSince ?></td>
 				<td><?= $validUntil ?></td>
-				<td><a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a></td>
+				<td>
+					<? if($pit['dataset'] != ""){ ?>
+						<a href="!!<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
+					<? }else{ ?>
+						<?= $pit['id'] ?>
+					<? } ?>
+				</td>
 				<td><a href="<?= $this->config->item('base_url') ?>bron/<?= $pit['dataset'] ?>"><?= $pit['dataset'] ?></a></td>
 			</tr>
 		<? } ?>
