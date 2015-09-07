@@ -48,7 +48,7 @@
 				<td><?= $validUntil ?></td>
 				<td>
 					<? if($pit['dataset'] != ""){ ?>
-						<a href="!!<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
+						<a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
 					<? }else{ ?>
 						<?= $pit['id'] ?>
 					<? } ?>
@@ -101,7 +101,7 @@
 				<td><?= $validUntil ?></td>
 				<td>
 					<? if($pit['dataset'] != ""){ ?>
-						<a href="!!<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
+						<a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
 					<? }else{ ?>
 						<?= $pit['id'] ?>
 					<? } ?>
