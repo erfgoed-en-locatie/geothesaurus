@@ -6,7 +6,7 @@
 
 <h1><?= preferredName($pits) ?></h1>
 
-<p>Dit concept van het type <em><?= $pits[0]['type'] ?></em> is samengesteld uit de volgende 'Plaatsen in Tijd' (PiT's)</p>
+<p>Dit concept van het type <em><?= $type ?></em> is samengesteld uit de volgende 'Plaatsen in Tijd' (PiT's)</p>
 
 
 <h3>PiT's met een geometrie</h3>
@@ -43,7 +43,7 @@
 
 			 ?>
 			<tr class="pit">
-				<td><?= $pit['name'] ?></td>
+				<td><?= $pit['name'] ?> <?= $pit['geometryIndex'] ?></td>
 				<td><?= $validSince ?></td>
 				<td><?= $validUntil ?></td>
 				<td>
@@ -96,7 +96,7 @@
 
 			 ?>
 			<tr class="pit">
-				<td><?= $pit['name'] ?></td>
+				<td><?= $pit['name'] ?> <?= $pit['geometryIndex'] ?></td>
 				<td><?= $validSince ?></td>
 				<td><?= $validUntil ?></td>
 				<td>

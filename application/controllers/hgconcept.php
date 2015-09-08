@@ -38,6 +38,7 @@ class Hgconcept extends CI_Controller {
 		
 		$data['pits'] = array();
 
+
 		foreach($result['features'][0]['properties']['pits'] as $pit){
 			if(!isset($pit['id']) && isset($pit['uri'])){
 				$pit['id'] = $pit['uri'];
@@ -49,6 +50,10 @@ class Hgconcept extends CI_Controller {
 				$pit['dataset'] = "";
 			}
 			$data['pits'][] = $pit;
+
+			if(isset($pit['type'])){
+				$data['type'] = $pit['type'];
+			}
 		}
 		
 		$calculatedConceptID = hgConceptID($data['pits']);
@@ -57,6 +62,7 @@ class Hgconcept extends CI_Controller {
 			//header("Accept:text/html");
 			//header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
 		}
+
 		
 		$this->load->view('header');
 		$this->load->view('hgconcept', $data);

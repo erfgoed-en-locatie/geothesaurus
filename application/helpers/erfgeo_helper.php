@@ -4,6 +4,7 @@ if(!function_exists('hgConceptID')){
 	
 	function hgConceptID($pits){
 		
+		//print_r($pits);
 		$sources = array("tgn","geonames","gemeentegeschiedenis","nationaal-wegenbestand","dbpedia");
 
 		foreach ($sources as $source) {
@@ -17,8 +18,19 @@ if(!function_exists('hgConceptID')){
 				}
 			}
 		}
-
+		
 		// no preferred sources found?
+		foreach ($pits as $pit) {
+			if(isset($pit['dataset']) && $pit['dataset']!=""){
+				if(isset($pit['uri'])){
+					return $pit['uri'];
+				}else{
+					return $pit['id'];
+				}
+			}
+		}
+
+		// if all else fails
 		return $pits[0]['id'];
 	
 	}
@@ -32,13 +44,12 @@ if(!function_exists('preferredName')){
 		// first, get most used name
 		$frequency = array();
 		foreach ($pits as $key => $pit) {
-			if(!isset($pit['name'])){
-				$pit['name'] = "";
-			}
-			if(isset($frequency[$pit['name']]) && $pit['name']!=""){
-				$frequency[$pit['name']]++;
-			}elseif($pit['name']!=""){
-				$frequency[$pit['name']]=1;
+			if(isset($pit['name'])){
+				if(isset($frequency[$pit['name']]) && $pit['name']!=""){
+					$frequency[$pit['name']]++;
+				}elseif($pit['name']!=""){
+					$frequency[$pit['name']]=1;
+				}
 			}
 		}
 		arsort($frequency);
@@ -60,10 +71,9 @@ if(!function_exists('preferredName')){
 				}
 			}
 		}
-
-
+		
 		// no preferred names found?
-		return $pits[0]['name'];
+		return $usage[0][0];
 	
 	}
 
