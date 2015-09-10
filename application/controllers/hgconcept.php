@@ -49,6 +49,32 @@ class Hgconcept extends CI_Controller {
 			if(!isset($pit['dataset'])){
 				$pit['dataset'] = "";
 			}
+			$pit['sortyear'] = -100000; // should be safe even for dutch archeology
+			$pit['startyear'] = "";
+			$pit['endyear'] = "";
+			if(isset($pit['validSince'])){
+				if(is_array($pit['validSince'])){
+					$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince'][0]));
+					$pit['startyear'] = date("Y",strtotime($pit['validSince'][0]));
+					if($pit['startyear'] != date("Y",strtotime($pit['validSince'][1]))){
+						$pit['startyear'] .= "/" . date("Y",strtotime($pit['validSince'][1]));
+					}
+				}else{
+					$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince']));
+					$pit['startyear'] = date("Y",strtotime($pit['validSince']));
+				}
+			}
+			if(isset($pit['validUntil'])){
+				if(is_array($pit['validUntil'])){
+					$pit['endyear'] = date("Y",strtotime($pit['validUntil'][0]));
+					if($pit['endyear']!=date("Y",strtotime($pit['validUntil'][1]))){
+						$pit['endyear'] .= "/" . date("Y",strtotime($pit['validUntil'][1]));
+					}
+				}else{
+					$pit['endyear'] = date("Y",strtotime($pit['validUntil']));
+				}
+			}
+
 			$data['pits'][] = $pit;
 
 			if(isset($pit['type'])){
@@ -58,11 +84,17 @@ class Hgconcept extends CI_Controller {
 		
 		$calculatedConceptID = hgConceptID($data['pits']);
 		if($calculatedConceptID!=$id){
-			echo $calculatedConceptID . " is niet " . $id;
+			//echo $calculatedConceptID . " is niet " . $id;
 			//header("Accept:text/html");
 			//header("Location: " . $this->config->item('base_url') . "hgconcept/" . $calculatedConceptID);
 		}
 
+		// order pits by validSince
+		$starts = array();
+		foreach ($data['pits'] as $k => $v) {
+			$starts[] = $v['sortyear'];
+		}
+		array_multisort($starts,SORT_ASC, $data['pits']);
 		
 		$this->load->view('header');
 		$this->load->view('hgconcept', $data);

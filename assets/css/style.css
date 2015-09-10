@@ -71,6 +71,9 @@ a{
 p{
 	margin-top: 18px;
 }
+.pvf-icon{
+	width: 20px;
+}
 .light{
 	color: #ccc;
 }

@@ -1,5 +1,6 @@
 <?
 
+$pvflabels = array("existence" => "bestaan", "geometry" => "geometrie", "toponym" => "toponiem");
 
 ?>
 
@@ -9,43 +10,31 @@
 <p>Dit concept van het type <em><?= $type ?></em> is samengesteld uit de volgende 'Plaatsen in Tijd' (PiT's)</p>
 
 
-<h3>PiT's met een geometrie</h3>
-
 <table class="table table-striped sortable">
+	
 	<thead>
+		<tr><th colspan="6"><h3>PiT's met een geometrie</h3></th></tr>
 		<tr>
-			<th style="width:20%;">naam</th>
-			<th style="width:12%;">begin</th>
-			<th style="width:12%;">eind</th>
+			<th>naam</th>
+			<th>tijd-begin</th>
+			<th>tijd-eind</th>
+			<th>tijd-van</th>
 			<th>PiT</th>
-			<th style="width:20%;">bron</th>
+			<th>bron</th>
 		</tr>
 	</thead>
 	<tbody>
 	<? foreach ($pits as $pit) { ?>
-		<? if($pit['geometryIndex']>-1){
-
-			$validSince = "";
-			if(isset($pit['validSince'])){
-				if(is_array($pit['validSince'])){
-					$pit['validSince'] = implode(", ", $pit['validSince']);
-				}
-				$validSince = $pit['validSince'];
-			}
-			$validUntil = "";
-			if(isset($pit['validUntil'])){
-				if(is_array($pit['validUntil'])){
-					$pit['validUntil'] = implode(", ", $pit['validUntil']);
-				}
-				$validUntil = $pit['validUntil'];
-			}
-
-
-			 ?>
+		<? if($pit['geometryIndex']>-1){ ?>
 			<tr class="pit">
-				<td><?= $pit['name'] ?> <?= $pit['geometryIndex'] ?></td>
-				<td><?= $validSince ?></td>
-				<td><?= $validUntil ?></td>
+				<td><?= $pit['name'] ?></td>
+				<td><?= $pit['startyear'] ?></td>
+				<td><?= $pit['endyear'] ?></td>
+				<td>
+					<? if(isset($pit['data']['periodValidFor'])){ ?>
+					<img class="pvf-icon" src="<?= $this->config->item('base_url') ?>assets/imgs/<?= $pit['data']['periodValidFor'] ?>.png" title="periode geldig voor <?= $pvflabels[$pit['data']['periodValidFor']] ?>" />
+					<? } ?>
+				</td>
 				<td>
 					<? if($pit['dataset'] != ""){ ?>
 						<a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
@@ -57,48 +46,22 @@
 			</tr>
 		<? } ?>
 	<? } ?>
-	</tbody>
-</table>
+	
+
+	<tr><th colspan="6"><h3>PiT's zonder geometrie</h3></th></tr>
 
 
-
-<h3>PiT's zonder geometrie</h3>
-
-<table class="table table-striped sortable">
-	<thead>
-		<tr>
-			<th style="width:20%;">naam</th>
-			<th style="width:12%;">begin</th>
-			<th style="width:12%;">eind</th>
-			<th>PiT</th>
-			<th style="width:20%;">bron</th>
-		</tr>
-	</thead>
-	<tbody>
 	<? foreach ($pits as $pit) { ?>
-		<? if($pit['geometryIndex']<0){
-
-			$validSince = "";
-			if(isset($pit['validSince'])){
-				if(is_array($pit['validSince'])){
-					$pit['validSince'] = implode(", ", $pit['validSince']);
-				}
-				$validSince = $pit['validSince'];
-			}
-			$validUntil = "";
-			if(isset($pit['validUntil'])){
-				if(is_array($pit['validUntil'])){
-					$pit['validUntil'] = implode(", ", $pit['validUntil']);
-				}
-				$validUntil = $pit['validUntil'];
-			}
-
-
-			 ?>
+		<? if($pit['geometryIndex']<0){ ?>
 			<tr class="pit">
-				<td><?= $pit['name'] ?> <?= $pit['geometryIndex'] ?></td>
-				<td><?= $validSince ?></td>
-				<td><?= $validUntil ?></td>
+				<td><?= $pit['name'] ?></td>
+				<td><?= $pit['startyear'] ?></td>
+				<td><?= $pit['endyear'] ?></td>
+				<td>
+					<? if(isset($pit['data']['periodValidFor'])){ ?>
+					<img class="pvf-icon" src="<?= $this->config->item('base_url') ?>assets/imgs/<?= $pit['data']['periodValidFor'] ?>.png" title="periode geldig voor <?= $pvflabels[$pit['data']['periodValidFor']] ?>" />
+					<? } ?>
+				</td>
 				<td>
 					<? if($pit['dataset'] != ""){ ?>
 						<a href="<?= $this->config->item('base_url') ?>pit/?id=<?= $pit['id'] ?>"><?= $pit['id'] ?></a>
