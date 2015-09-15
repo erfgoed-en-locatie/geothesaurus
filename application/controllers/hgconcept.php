@@ -37,48 +37,50 @@ class Hgconcept extends CI_Controller {
 		$result = json_decode($json,true);
 		
 		$data['pits'] = array();
+		$data['type'] = "";
 
-
-		foreach($result['features'][0]['properties']['pits'] as $pit){
-			if(!isset($pit['id']) && isset($pit['uri'])){
-				$pit['id'] = $pit['uri'];
-			}
-			if(!isset($pit['name'])){
-				$pit['name'] = "";
-			}
-			if(!isset($pit['dataset'])){
-				$pit['dataset'] = "";
-			}
-			$pit['sortyear'] = -100000; // should be safe even for dutch archeology
-			$pit['startyear'] = "";
-			$pit['endyear'] = "";
-			if(isset($pit['validSince'])){
-				if(is_array($pit['validSince'])){
-					$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince'][0]));
-					$pit['startyear'] = date("Y",strtotime($pit['validSince'][0]));
-					if($pit['startyear'] != date("Y",strtotime($pit['validSince'][1]))){
-						$pit['startyear'] .= "/" . date("Y",strtotime($pit['validSince'][1]));
-					}
-				}else{
-					$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince']));
-					$pit['startyear'] = date("Y",strtotime($pit['validSince']));
+		if(isset($result['features'][0]['properties']['pits'])){
+			foreach($result['features'][0]['properties']['pits'] as $pit){
+				if(!isset($pit['id']) && isset($pit['uri'])){
+					$pit['id'] = $pit['uri'];
 				}
-			}
-			if(isset($pit['validUntil'])){
-				if(is_array($pit['validUntil'])){
-					$pit['endyear'] = date("Y",strtotime($pit['validUntil'][0]));
-					if($pit['endyear']!=date("Y",strtotime($pit['validUntil'][1]))){
-						$pit['endyear'] .= "/" . date("Y",strtotime($pit['validUntil'][1]));
-					}
-				}else{
-					$pit['endyear'] = date("Y",strtotime($pit['validUntil']));
+				if(!isset($pit['name'])){
+					$pit['name'] = "";
 				}
-			}
+				if(!isset($pit['dataset'])){
+					$pit['dataset'] = "";
+				}
+				$pit['sortyear'] = -100000; // should be safe even for dutch archeology
+				$pit['startyear'] = "";
+				$pit['endyear'] = "";
+				if(isset($pit['validSince'])){
+					if(is_array($pit['validSince'])){
+						$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince'][0]));
+						$pit['startyear'] = date("Y",strtotime($pit['validSince'][0]));
+						if($pit['startyear'] != date("Y",strtotime($pit['validSince'][1]))){
+							$pit['startyear'] .= "/" . date("Y",strtotime($pit['validSince'][1]));
+						}
+					}else{
+						$pit['sortyear'] = (int)date("Y",strtotime($pit['validSince']));
+						$pit['startyear'] = date("Y",strtotime($pit['validSince']));
+					}
+				}
+				if(isset($pit['validUntil'])){
+					if(is_array($pit['validUntil'])){
+						$pit['endyear'] = date("Y",strtotime($pit['validUntil'][0]));
+						if($pit['endyear']!=date("Y",strtotime($pit['validUntil'][1]))){
+							$pit['endyear'] .= "/" . date("Y",strtotime($pit['validUntil'][1]));
+						}
+					}else{
+						$pit['endyear'] = date("Y",strtotime($pit['validUntil']));
+					}
+				}
 
-			$data['pits'][] = $pit;
+				$data['pits'][] = $pit;
 
-			if(isset($pit['type'])){
-				$data['type'] = $pit['type'];
+				if(isset($pit['type'])){
+					$data['type'] = $pit['type'];
+				}
 			}
 		}
 		

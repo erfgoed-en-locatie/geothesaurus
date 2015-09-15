@@ -7,6 +7,9 @@ $pvflabels = array("existence" => "bestaan", "geometry" => "geometrie", "toponym
 
 <h1><?= preferredName($pits) ?></h1>
 
+<? if(count($pits)==0){ ?>
+	<p>De door u gevolgde url heeft geen resultaat opgeleverd.</p>
+<? }else{ ?>
 <p>Dit concept van het type <em><?= $type ?></em> is samengesteld uit de volgende 'Plaatsen in Tijd' (PiT's)</p>
 
 
@@ -75,4 +78,6 @@ $pvflabels = array("existence" => "bestaan", "geometry" => "geometrie", "toponym
 	<? } ?>
 	</tbody>
 </table>
+
+<? } ?>
 

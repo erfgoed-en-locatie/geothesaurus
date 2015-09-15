@@ -30,8 +30,12 @@ if(!function_exists('hgConceptID')){
 			}
 		}
 
+		if(isset($pits[0]['id'])){
+			return $pits[0]['id'];
+		}
+
 		// if all else fails
-		return $pits[0]['id'];
+			return "not found";
 	
 	}
 
@@ -73,7 +77,12 @@ if(!function_exists('preferredName')){
 		}
 		
 		// no preferred names found?
-		return $usage[0][0];
+		if(isset($usage[0][0])){
+			return $usage[0][0];
+		}else{
+			return "";
+		}
+		
 	
 	}
 
