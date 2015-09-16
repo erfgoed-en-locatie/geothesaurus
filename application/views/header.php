@@ -30,7 +30,7 @@
 	<div id="header" class="container">
 		<div id="mainmenu">
 			<a href="http://erfgeo.nl/thesaurus/">Thesaurus</a> <span class="delimiter"></span>
-			<a href="http://erfgeo.nl/nieuws/">Nieuws</a><span class="delimiter"></span>
+			<a href="http://erfgeo.nl/nieuws/">Blog</a><span class="delimiter"></span>
 			<a href="http://erfgeo.nl/wat-hoe/">Wat? Hoe?</a><span class="delimiter"></span>
 			<a href="http://erfgeo.nl/tools/">Tools</a>
 		</div>

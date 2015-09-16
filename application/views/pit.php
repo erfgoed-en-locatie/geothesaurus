@@ -13,13 +13,13 @@ $props["type"] = $pit['type'];
 $props["permalink"] = '<input class="form-control" type="text" value="' . $this->config->item('base_url') . 'pit/?id=' . $pitid . '" />';
 if(isset($pit['validSince'])){
 	if(is_array($pit['validSince'])){
-		$pit['validSince'] = implode(" - ", $pit['validSince']);
+		$pit['validSince'] = "tussen " . implode(" en ", $pit['validSince']);
 	}
 	$props['startdatum'] = $pit['validSince'];
 }
 if(isset($pit['validUntil'])){
 	if(is_array($pit['validUntil'])){
-		$pit['validUntil'] = implode(" - ", $pit['validUntil']);
+		$pit['validUntil'] = "tussen " . implode(" en ", $pit['validUntil']);
 	}
 	$props['einddatum'] = $pit['validUntil'];
 }
