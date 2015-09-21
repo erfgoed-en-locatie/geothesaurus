@@ -4,6 +4,7 @@
 
 ?>
 
+<p><a href="<?= $this->config->item('base_url') ?>bronnen">bekijk alle bronnen</a></p>
 
 <h1><?= $source['title'] ?></h1>
 
@@ -11,6 +12,7 @@
 
 <div class="row">
 	<div class="col-md-6">
+
 
 		<p><?= nl2br(hrefUrl($source['description'])) ?></p>
 
