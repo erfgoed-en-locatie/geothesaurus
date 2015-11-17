@@ -1,7 +1,11 @@
 <?
 
 // format kenmerken
-$props["naam"] = $pit['name'];
+if(!isset($pit['name']) || $pit['name'] == ""){
+	$props["naam"] = "naamloos";
+}else{
+	$props["naam"] = $pit['name'];
+}
 $props["bron"] = '<a href="' . $this->config->item('base_url') . 'bron/' . $pit['dataset'] . '">' . $pit['dataset'] . '</a>';
 if(isset($pit['uri'])){
 	$props['bron uri'] = '<a href="' . $pit['uri'] . '">' . $pit['uri'] . '</a>';
