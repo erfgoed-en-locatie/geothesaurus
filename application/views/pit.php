@@ -3,6 +3,7 @@
 // format kenmerken
 if(!isset($pit['name']) || $pit['name'] == ""){
 	$props["naam"] = "naamloos";
+	$pit['name'] = "naamloos";
 }else{
 	$props["naam"] = $pit['name'];
 }
