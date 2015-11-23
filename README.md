@@ -2,7 +2,9 @@
 
 De GeoThesaurus laat je door de Histograph data bladeren, waarbij elk hgconcept, elke pit en elke bron haar eigen URI heeft.
 
-Wijzig na installatie in [application/config/config.php](application/config/config.php) de variabele `$config['base_url']` in de webroot van je applicatie.
+##Installatie
+
+Zet de files op een webserver en wijzig  in [application/config/config.php](application/config/config.php) de variabele `$config['base_url']` in de webroot van je applicatie.
 
 ##hgConceptId
 
